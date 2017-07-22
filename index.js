@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const chromePasswords = require("./chrome-passwords");
 const sshFinder = require("./ssh-finder");
 const passCli = require("./pass-cli");
