@@ -13,14 +13,6 @@ You can also run following command **if noone else is seeing your screen or reco
 npx asse --values
 ```
 
-If you don't have npx, it comes with version 5.0 of npm.
-
-You can also just run npm install, it will also work (with a postinstall script);
-
-```
-npm install asse
-```
-
 Reason of existence
 ===================
 
