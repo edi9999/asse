@@ -15,10 +15,13 @@ module.exports = function run() {
 				values.config = content;
 			}
 			if (content.split("\n")[0].indexOf("BEGIN RSA PRIVATE KEY") !== -1) {
-				summary.push(`✓ Found SSH private Key ${file}`);
 				values.privateKeys.push({ file, content });
 			}
 		});
+		const countPrivateKeys = values.privateKeys.length
+		if (countPrivateKeys > 0) {
+			summary.push(`✓ Found ${countPrivateKeys} SSH private Keys`);
+		}
 		resolve({ summary: summary.join("\n"), value: values });
 	});
 };
