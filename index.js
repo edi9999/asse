@@ -5,14 +5,15 @@ const envCheck = require("./env-check");
 const credentialsInFiles = require("./credentials-in-files");
 
 let showValues = process.argv.indexOf("--values") !== -1 || process.argv.indexOf("-v") !== -1;
+let showErrors = process.argv.indexOf("--errors") !== -1 || process.argv.indexOf("-e") !== -1;
 
 if (!showValues) {
 	console.log("To show the values of the leaks found, run the same command and append --values");
 }
 
 function handlePromises(promises) {
-	promises.forEach(function (promise) {
-		promise.then(function (result) {
+	Object.keys(promises).forEach(function (promiseName) {
+		promises[promiseName]().then(function (result) {
 			if (!result) {
 				return;
 			}
@@ -24,15 +25,22 @@ function handlePromises(promises) {
 				console.log(result.value);
 			}
 		}).catch(function (err) {
-			console.error(err);
+			if (showErrors) {
+				console.error(err);
+			}
+			else {
+				console.log(`Error while running ${promiseName}, run the same command and append --errors to see the stacktrace`);
+			}
 		});
 	});
 }
 
-handlePromises([
-	chromePasswords(),
-	sshFinder(),
-	passCli(),
-	envCheck(),
-	credentialsInFiles(),
-]);
+const promises = {
+	chromePasswords,
+	sshFinder,
+	passCli,
+	envCheck,
+	credentialsInFiles,
+}
+
+handlePromises(promises);
