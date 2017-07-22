@@ -15,9 +15,9 @@ npx asse --values
 
 If you don't have `npx` (which comes with npm@5.2), you can write :
 
-`
+```
 npm install -g asse && asse
-`\`
+```
 
 Reason of existence
 ===================
